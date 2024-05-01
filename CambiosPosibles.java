@@ -1,26 +1,47 @@
-import java.security.spec.RSAOtherPrimeInfo;
-import java.util.Scanner;
-
+import java.util.ArrayList;
+import java.util.List;
 public class CambiosPosibles {
-    static void CambiosPosibles(int[] array, int n) {
+    static void encontrarCombinaciones(int[] numeros, int n, List<Integer> combinacionActual, List<List<Integer>> resultados) {
+        int suma = sumarLista(combinacionActual);
 
-    }
-    public static void main(String[] args) {
-        System.out.println("Ingrese el tamaño del arreglo: ");
-        Scanner scanner = new Scanner(System.in);
-        int ArraySize = scanner.nextInt();
-        int[] Array = new int[ArraySize];
-
-        for(int i = 0; i < ArraySize; i++) {
-            System.out.println("Ingrese el valor de la posición " + i + ": ");
-            Array[i] = scanner.nextInt();
+        if (suma == n) {
+            List<Integer> combinacionOrdenada = new ArrayList<>(combinacionActual);
+            combinacionOrdenada.sort(null); // Ordenar la combinación
+            if (!resultados.contains(combinacionOrdenada)) {
+                resultados.add(combinacionOrdenada);
+            }
+            return;
         }
-        System.out.println("Ingrese el valor de n: ");
-        int n = scanner.nextInt();
 
-        CambiosPosibles(Array, n);
+        if (suma >= n) {
+            return;
+        }
+
+        for (int i = 0; i < numeros.length; i++) {
+            combinacionActual.add(numeros[i]);
+            encontrarCombinaciones(numeros, n, combinacionActual, resultados);
+            combinacionActual.remove(combinacionActual.size() - 1);
+        }
     }
 
+    static int sumarLista(List<Integer> lista) {
+        int suma = 0;
+        for (int num : lista) {
+            suma += num;
+        }
+        return suma;
+    }
 
+    public static void main(String[] args) {
+        int[] numeros = {9, 3, 1, 2}; // Vector de números enteros
+        int objetivo = 8; // El número al que debe sumar las combinaciones
 
+        List<List<Integer>> resultados = new ArrayList<>();
+        encontrarCombinaciones(numeros, objetivo, new ArrayList<>(), resultados);
+
+        System.out.println("Las combinaciones que suman " + objetivo + " son:");
+        for (List<Integer> combinacion : resultados) {
+            System.out.println(combinacion);
+        }
+    }
 }
