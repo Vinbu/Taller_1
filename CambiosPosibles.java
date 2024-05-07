@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 public class CambiosPosibles {
-    static void encontrarCombinaciones(int[] numeros, int n, List<Integer> combinacionActual, List<List<Integer>> resultados) {
+    static void cambios_posible(int[] numeros, int n, List<Integer> combinacionActual, List<List<Integer>> resultados) {
         int suma = sumarLista(combinacionActual);
 
         if (suma == n) {
@@ -19,7 +19,7 @@ public class CambiosPosibles {
 
         for (int i = 0; i < numeros.length; i++) {
             combinacionActual.add(numeros[i]);
-            encontrarCombinaciones(numeros, n, combinacionActual, resultados);
+            cambios_posible(numeros, n, combinacionActual, resultados);
             combinacionActual.remove(combinacionActual.size() - 1);
         }
     }
@@ -37,7 +37,7 @@ public class CambiosPosibles {
         int objetivo = 8; // El número al que debe sumar las combinaciones
 
         List<List<Integer>> resultados = new ArrayList<>();
-        encontrarCombinaciones(numeros, objetivo, new ArrayList<>(), resultados);
+        cambios_posible(numeros, objetivo, new ArrayList<>(), resultados);
 
         System.out.println("Las combinaciones que suman " + objetivo + " son:");
         for (List<Integer> combinacion : resultados) {
